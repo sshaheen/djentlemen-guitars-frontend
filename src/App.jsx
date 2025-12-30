@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router';
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from 'react-router';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -16,7 +22,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { token, authFetch } = useAuth() || {};
- 
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -28,7 +34,9 @@ const App = () => {
     }
     setLoading(true);
     try {
-      const res = authFetch ? await authFetch(API_URL, { method: 'GET' }) : await fetch(API_URL);
+      const res = authFetch
+        ? await authFetch(API_URL, { method: 'GET' })
+        : await fetch(API_URL);
       if (!res.ok) throw new Error('Failed to fetch data');
       const data = await res.json();
       setLessons(data);

@@ -44,71 +44,73 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-12 p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-semibold text-purple-700 mb-4">Create an account</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className='max-w-md mx-auto mt-12 p-6 bg-white rounded-lg shadow'>
+      <h2 className='text-2xl font-semibold text-purple-700 mb-4'>
+        Create an account
+      </h2>
+      <form onSubmit={handleSubmit} className='space-y-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
           <div>
-            <label className="block text-sm text-gray-700">First name</label>
+            <label className='block text-sm text-gray-700'>First name</label>
             <input
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="mt-1 block w-full border border-gray-200 rounded px-3 py-2"
+              className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-700">Last name</label>
+            <label className='block text-sm text-gray-700'>Last name</label>
             <input
               required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="mt-1 block w-full border border-gray-200 rounded px-3 py-2"
+              className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Email</label>
+          <label className='block text-sm text-gray-700'>Email</label>
           <input
             required
-            type="email"
+            type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full border border-gray-200 rounded px-3 py-2"
+            className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
           />
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Password</label>
+          <label className='block text-sm text-gray-700'>Password</label>
           <input
             required
-            type="password"
+            type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full border border-gray-200 rounded px-3 py-2"
+            className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
           />
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Age</label>
+          <label className='block text-sm text-gray-700'>Age</label>
           <input
             required
-            type="number"
-            min="0"
+            type='number'
+            min='0'
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="mt-1 block w-full border border-gray-200 rounded px-3 py-2"
+            className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
           />
         </div>
 
-        {error && <div className="text-red-600">{error}</div>}
+        {error && <div className='text-red-600'>{error}</div>}
 
         <div>
           <button
-            type="submit"
+            type='submit'
             disabled={loading}
-            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+            className='px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700'
           >
             {loading ? 'Creating...' : 'Create account'}
           </button>
