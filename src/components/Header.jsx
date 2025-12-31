@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../AuthContext';
 
 const Header = () => {
-  const { token, logout } = useAuth() || {};
+  const { token, logout, userInfo } = useAuth() || {};
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -38,12 +38,21 @@ const Header = () => {
           </div>
           <div className='flex items-center space-x-4'>
             {token ? (
-              <button
-                onClick={handleLogout}
-                className='px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700'
-              >
-                Logout
-              </button>
+              <>
+                {userInfo && (
+                  <div className='text-sm text-purple-700 mr-2'>
+                    {`${userInfo.first_name || userInfo.firstName || ''} ${
+                      userInfo.last_name || userInfo.lastName || ''
+                    }`.trim() || userInfo.email}
+                  </div>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className='px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700'
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <Link

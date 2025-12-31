@@ -3,14 +3,11 @@ import { useNavigate } from 'react-router';
 import { useAuth } from '../AuthContext';
 
 const BookLesson = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [teacher, setTeacher] = useState('');
+  const [teacher, setTeacher] = useState('Makenna');
   const [lessonTime, setLessonTime] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { authFetch } = useAuth() || {};
+  const { authFetch, userInfo } = useAuth() || {};
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,11 +15,17 @@ const BookLesson = () => {
     setError(null);
     setLoading(true);
     try {
+      if (!userInfo || !userInfo.email) {
+        throw new Error('You must be logged in to book a lesson');
+      }
+      if (!teacher) {
+        throw new Error('Please select a teacher');
+      }
       const payload = {
         lesson_time: lessonTime ? new Date(lessonTime).toISOString() : null,
-        email,
-        first_name: firstName,
-        last_name: lastName,
+        email: userInfo.email,
+        first_name: userInfo.first_name || userInfo.firstName || null,
+        last_name: userInfo.last_name || userInfo.lastName || null,
         teacher,
       };
 
@@ -57,47 +60,22 @@ const BookLesson = () => {
         Book a Lesson
       </h2>
       <form onSubmit={handleSubmit} className='space-y-4'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-          <div>
-            <label className='block text-sm text-gray-700'>First name</label>
-            <input
-              required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
-            />
-          </div>
-          <div>
-            <label className='block text-sm text-gray-700'>Last name</label>
-            <input
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className='block text-sm text-gray-700'>Email</label>
-          <input
-            required
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
-          />
-        </div>
+        {/* Name and email come from the authenticated user's `userInfo` */}
 
         <div>
           <label className='block text-sm text-gray-700'>Teacher</label>
-          <input
+          <select
             required
             value={teacher}
             onChange={(e) => setTeacher(e.target.value)}
             className='mt-1 block w-full border border-gray-200 rounded px-3 py-2'
-            placeholder='e.g. John Doe'
-          />
+          >
+            <option value=''>Select a teacher</option>
+            <option value='Bobby'>Bobby</option>
+            <option value='Fiona'>Fiona</option>
+            <option value='Raul'>Raul</option>
+            <option value='Makenna'>Makenna</option>
+          </select>
         </div>
 
         <div>

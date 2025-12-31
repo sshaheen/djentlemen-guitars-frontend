@@ -17,6 +17,14 @@ export const AuthProvider = ({ children }) => {
       return null;
     }
   });
+  const [userInfo, setUserInfo] = useState(() => {
+    try {
+      const raw = localStorage.getItem('userInfo');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(false);
 
   const saveTokens = (t, rt) => {
@@ -27,6 +35,14 @@ export const AuthProvider = ({ children }) => {
       else localStorage.removeItem('token');
       if (rt) localStorage.setItem('refreshToken', rt);
       else localStorage.removeItem('refreshToken');
+    } catch (e) {}
+  };
+
+  const saveUserInfo = (u) => {
+    setUserInfo(u || null);
+    try {
+      if (u) localStorage.setItem('userInfo', JSON.stringify(u));
+      else localStorage.removeItem('userInfo');
     } catch (e) {}
   };
 
@@ -43,10 +59,17 @@ export const AuthProvider = ({ children }) => {
         throw new Error(err || 'Login failed');
       }
       const data = await res.json();
+      // Expecting response with `email`, `first_name`, `last_name`, `token`, `refresh_token`
       const t = data.token || data.jwt || data.accessToken;
       const rt = data.refreshToken || data.refresh_token || data.refresh;
       if (!t) throw new Error('No token returned from server');
       saveTokens(t, rt);
+      const ui = data.user || {
+        email: data.email || null,
+        first_name: data.first_name || data.firstName || null,
+        last_name: data.last_name || data.lastName || null,
+      };
+      saveUserInfo(ui.email ? ui : null);
       return t;
     } finally {
       setLoading(false);
@@ -55,6 +78,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     saveTokens(null, null);
+    saveUserInfo(null);
   };
 
   const refreshAccessToken = async () => {
@@ -103,7 +127,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ token, refreshToken, login, logout, loading, authFetch }}
+      value={{
+        token,
+        refreshToken,
+        userInfo,
+        login,
+        logout,
+        loading,
+        authFetch,
+      }}
     >
       {children}
     </AuthContext.Provider>
