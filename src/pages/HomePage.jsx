@@ -3,7 +3,7 @@ import DisplayLessons from '../components/DisplayLessons';
 import { useAuth } from '../AuthContext';
 
 const HomePage = ({ lessons, loading, error }) => {
-  const { token, logout, userInfo } = useAuth() || {};
+  const { userInfo } = useAuth() || {};
 
   return (
     <div className='max-w-5xl mx-auto mt-6 p-4'>
