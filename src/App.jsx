@@ -15,6 +15,7 @@ import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './AuthContext';
 import BookLesson from './pages/BookLesson';
+import ResetPassword from './pages/ResetPassword';
 const API_URL = '/api/lessons';
 
 const App = () => {
@@ -86,6 +87,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <BookLesson />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <ProtectedRoute>
+              <ResetPassword />
             </ProtectedRoute>
           }
         />

@@ -46,6 +46,12 @@ const Header = () => {
                     }`.trim() || userInfo.email}
                   </div>
                 )}
+                <Link
+                  to='/reset-password'
+                  className='px-3 py-1 mr-2 bg-white text-purple-700 border border-purple-300 rounded hover:bg-purple-50'
+                >
+                  Reset Password
+                </Link>
                 <button
                   onClick={handleLogout}
                   className='px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700'
