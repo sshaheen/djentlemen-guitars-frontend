@@ -13,11 +13,14 @@ import RegisterPage from './pages/RegisterPage';
 import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedTeacherRoute from './components/ProtectedTeacherRoute';
 import { useAuth } from './AuthContext';
 import BookLesson from './pages/BookLesson';
 import TeacherLogin from './pages/TeacherLogin';
 import TeacherHome from './pages/TeacherHome';
+import TeacherRegister from './pages/TeacherRegister';
 import ResetPassword from './pages/ResetPassword';
+import TeacherResetPassword from './pages/TeacherResetPassword';
 const API_URL = '/api/lessons';
 
 const App = () => {
@@ -85,6 +88,10 @@ const App = () => {
           element={token ? <Navigate to='/' replace /> : <RegisterPage />}
         />
         <Route
+          path='/teacher-register'
+          element={token ? <Navigate to='/' replace /> : <TeacherRegister />}
+        />
+        <Route
           path='/book'
           element={
             <ProtectedRoute>
@@ -105,9 +112,17 @@ const App = () => {
         <Route
           path='/teacher'
           element={
-            <ProtectedRoute>
+            <ProtectedTeacherRoute>
               <TeacherHome />
-            </ProtectedRoute>
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path='/teacher/reset-password'
+          element={
+            <ProtectedTeacherRoute>
+              <TeacherResetPassword />
+            </ProtectedTeacherRoute>
           }
         />
         <Route path='*' element={<NotFoundPage />} />
