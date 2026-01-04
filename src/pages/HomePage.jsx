@@ -12,7 +12,14 @@ const HomePage = ({ lessons, loading, error }) => {
           `${userInfo.first_name}'s lessons`
         ) : (
           <Link to='/book'>
-            Hi {userInfo.first_name}! Click here to book your first lesson.
+            <div className='flex items-center justify-center min-h-[60vh] p-6'>
+              <div className='max-w-md w-full bg-white rounded-lg shadow p-8 text-center'>
+                <h3 className='text-lg font-medium text-purple-700'>
+                  Hi {userInfo.first_name}! Please click here to book your first
+                  lesson!
+                </h3>
+              </div>
+            </div>
           </Link>
         )}
       </h2>

@@ -35,7 +35,15 @@ const TeacherHome = () => {
   if (error) return <div className='p-6 text-red-600'>{error}</div>;
 
   if (!lessonsMap || Object.keys(lessonsMap).length === 0)
-    return <div className='p-6'>No lessons found.</div>;
+    return (
+      <div className='flex items-center justify-center min-h-[60vh] p-6'>
+        <div className='max-w-md w-full bg-white rounded-lg shadow p-8 text-center'>
+          <h3 className='text-lg font-medium text-purple-700'>
+            You do not have any lessons booked yet.
+          </h3>
+        </div>
+      </div>
+    );
 
   return (
     <div className='max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow'>

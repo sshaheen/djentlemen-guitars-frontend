@@ -18,10 +18,44 @@ const TeacherLogin = () => {
       await teacherLogin({ email, password });
       navigate('/teacher');
     } catch (err) {
-      setError(err.message || 'Login failed');
+      setError(formatError(err));
     } finally {
       setLoading(false);
     }
+  };
+
+  const formatError = (err) => {
+    if (!err) return '';
+    if (typeof err === 'object') {
+      if (err.message) return err.message;
+      if (err.error) return String(err.error);
+      return JSON.stringify(err);
+    }
+    if (typeof err === 'string') {
+      const trimmed = err.trim();
+      if (
+        (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
+        (trimmed.startsWith('[') && trimmed.endsWith(']'))
+      ) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (parsed.message) return parsed.message;
+          if (parsed.error) return parsed.error;
+          if (parsed.detail) return parsed.detail;
+          if (parsed.errors) {
+            if (typeof parsed.errors === 'string') return parsed.errors;
+            if (Array.isArray(parsed.errors)) return parsed.errors.join('; ');
+            if (typeof parsed.errors === 'object')
+              return Object.values(parsed.errors).flat().join('; ');
+          }
+          return JSON.stringify(parsed);
+        } catch (e) {
+          // fall through
+        }
+      }
+      return err;
+    }
+    return String(err);
   };
 
   return (
@@ -50,7 +84,7 @@ const TeacherLogin = () => {
         </div>
         {error && (
           <div className='border border-red-200 bg-red-50 text-red-700 p-3 rounded-md'>
-            {error}
+            {formatError(error)}
           </div>
         )}
         <div>
