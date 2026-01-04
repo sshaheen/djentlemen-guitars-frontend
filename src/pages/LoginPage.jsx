@@ -18,7 +18,7 @@ const LoginPage = () => {
     setError(null);
     try {
       await auth.login({ email, password });
-      navigate(from, { replace: true });
+      navigate('/', { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {

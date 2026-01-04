@@ -69,6 +69,8 @@ export const AuthProvider = ({ children }) => {
         first_name: data.first_name || data.firstName || null,
         last_name: data.last_name || data.lastName || null,
       };
+      // mark standard users explicitly
+      if (ui) ui.is_teacher = false;
       saveUserInfo(ui.email ? ui : null);
       return t;
     } finally {
@@ -98,6 +100,8 @@ export const AuthProvider = ({ children }) => {
         first_name: data.first_name || data.firstName || null,
         last_name: data.last_name || data.lastName || null,
       };
+      // mark teacher users explicitly
+      if (ui) ui.is_teacher = true;
       saveUserInfo(ui.email ? ui : null);
       return t;
     } finally {

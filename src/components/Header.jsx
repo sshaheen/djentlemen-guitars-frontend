@@ -5,6 +5,12 @@ const Header = () => {
   const { token, logout, userInfo } = useAuth() || {};
   const navigate = useNavigate();
 
+  const isTeacher = Boolean(
+    userInfo &&
+      (userInfo.is_teacher || userInfo.isTeacher || userInfo.role === 'teacher')
+  );
+  const homeLink = token && isTeacher ? '/teacher' : '/';
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -19,7 +25,10 @@ const Header = () => {
               Djentlemen Guitars
             </Link>
             <div className='hidden md:flex ml-8 space-x-4'>
-              <Link to='/' className='text-purple-600 hover:text-purple-800'>
+              <Link
+                to={homeLink}
+                className='text-purple-600 hover:text-purple-800'
+              >
                 Home
               </Link>
               <Link
@@ -28,12 +37,14 @@ const Header = () => {
               >
                 About
               </Link>
-              <Link
-                to='/book'
-                className='text-purple-600 hover:text-purple-800'
-              >
-                Book
-              </Link>
+              {!isTeacher && (
+                <Link
+                  to='/book'
+                  className='text-purple-600 hover:text-purple-800'
+                >
+                  Book
+                </Link>
+              )}
             </div>
           </div>
           <div className='flex items-center space-x-4'>
