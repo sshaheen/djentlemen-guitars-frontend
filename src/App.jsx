@@ -15,6 +15,8 @@ import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './AuthContext';
 import BookLesson from './pages/BookLesson';
+import TeacherLogin from './pages/TeacherLogin';
+import TeacherHome from './pages/TeacherHome';
 import ResetPassword from './pages/ResetPassword';
 const API_URL = '/api/lessons';
 
@@ -99,6 +101,15 @@ const App = () => {
           }
         />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/teacher-login' element={<TeacherLogin />} />
+        <Route
+          path='/teacher'
+          element={
+            <ProtectedRoute>
+              <TeacherHome />
+            </ProtectedRoute>
+          }
+        />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </>

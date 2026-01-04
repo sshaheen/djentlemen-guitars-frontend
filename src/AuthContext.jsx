@@ -76,6 +76,35 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const teacherLogin = async (credentials) => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/teacher_login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || 'Teacher login failed');
+      }
+      const data = await res.json();
+      const t = data.token || data.jwt || data.accessToken;
+      const rt = data.refreshToken || data.refresh_token || data.refresh;
+      if (!t) throw new Error('No token returned from server');
+      saveTokens(t, rt);
+      const ui = data.user || {
+        email: data.email || null,
+        first_name: data.first_name || data.firstName || null,
+        last_name: data.last_name || data.lastName || null,
+      };
+      saveUserInfo(ui.email ? ui : null);
+      return t;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = () => {
     saveTokens(null, null);
     saveUserInfo(null);
@@ -132,6 +161,7 @@ export const AuthProvider = ({ children }) => {
         refreshToken,
         userInfo,
         login,
+        teacherLogin,
         logout,
         loading,
         authFetch,

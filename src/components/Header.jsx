@@ -68,6 +68,12 @@ const Header = () => {
                   Login
                 </Link>
                 <Link
+                  to='/teacher-login'
+                  className='px-3 py-1 bg-white text-purple-700 border border-purple-300 rounded hover:bg-purple-50'
+                >
+                  Teacher Login
+                </Link>
+                <Link
                   to='/register'
                   className='px-3 py-1 text-purple-700 hover:text-purple-900'
                 >
