@@ -4,6 +4,10 @@
 
 Djentlemen Guitars is a small booking platform for guitar lessons. This repository contains the frontend single-page application built with React and Vite. It provides user and teacher authentication, lesson booking for students, and a teacher dashboard for managing lessons.
 
+## Disclaimer
+To help speed up the production of the front end application, I used GitHub Co-pilot to help me create some of the pages and views as well as the frontend authentication logic.
+All backend code was written entirely by me and can be found at [Djentlemen Guitars Backend](https://github.com/sshaheen/djentlemen-guitars-api)
+
 Key features
 
 - User authentication (regular users and teachers)
